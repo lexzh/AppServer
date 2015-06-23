@@ -1,7 +1,7 @@
 namespace Protocol
 {
-    using PublicClass;
     using System;
+    using Library;
 
     public class AlarmHandler
     {

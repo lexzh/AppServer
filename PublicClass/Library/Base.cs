@@ -5,13 +5,13 @@ namespace Library
 
     public class Base
     {
-        protected string ConvertNullToEmpty(string string_0)
+        protected string ConvertNullToEmpty(string pStr)
         {
-            if (string_0 == null)
+            if (pStr == null)
             {
-                string_0 = string.Empty;
+                pStr = string.Empty;
             }
-            return string_0;
+            return pStr;
         }
 
         public string GetCallFunction()
@@ -25,9 +25,9 @@ namespace Library
             return name;
         }
 
-        public string GetExceptionMsg(Exception exception_0)
+        public string GetExceptionMsg(Exception ex)
         {
-            return (exception_0.Message + exception_0.StackTrace);
+            return (ex.Message + ex.StackTrace);
         }
     }
 }

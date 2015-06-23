@@ -15,9 +15,9 @@ namespace Remoting
 
     public class RemotingManager
     {
-        private const string _ChannelName = "GpsClientServerChannel";
+        private const string _ChannelName = "ClientServerChannel";
         private const string _ExceptionMessage = "通常每个套接字地址(协议/网络地址/端口)只允许使用一次";
-        private const string _ServerObjectUrl = "GpsRemotingServer";
+        private const string _ServerObjectUrl = "RemotingServer";
         private const int _timeOut = 180;
         private const int _TryNum = 5;
         private const int _TrySleepTime = 0x4e20;
@@ -103,8 +103,8 @@ namespace Remoting
         {
             RemotingConfiguration.CustomErrorsMode = CustomErrorsModes.Off;
             RemotingConfiguration.CustomErrorsEnabled(false);
-            RemotingConfiguration.ApplicationName = "GpsClientServerChannel";
-            RemotingConfiguration.RegisterWellKnownServiceType(typeof(RemotingLogin), "GpsRemotingServer", WellKnownObjectMode.SingleCall);
+            RemotingConfiguration.ApplicationName = "ClientServerChannel";
+            RemotingConfiguration.RegisterWellKnownServiceType(typeof(RemotingLogin), "RemotingServer", WellKnownObjectMode.SingleCall);
             TrackingServices.RegisterTrackingHandler(new IPTrackingHandler());
         }
 
@@ -122,7 +122,7 @@ namespace Remoting
             {
                 foreach (IChannel channel in ChannelServices.RegisteredChannels)
                 {
-                    if ("GpsClientServerChannel".Equals(channel.ChannelName))
+                    if ("ClientServerChannel".Equals(channel.ChannelName))
                     {
                         return true;
                     }

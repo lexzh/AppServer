@@ -87,13 +87,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\bin\Debug\</OutputPath>
+    <OutputPath>..\%40bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <BaseAddress>285212672</BaseAddress>
     <FileAlignment>4096</FileAlignment>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisLogFile>..\GPSClient_Source\bin\Debug\PublicClass.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
@@ -105,7 +104,7 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>..\bin\Release\</OutputPath>
+    <OutputPath>..\%40bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <BaseAddress>285212672</BaseAddress>
     <Optimize>true</Optimize>
@@ -119,6 +118,42 @@
     <CodeAnalysisRuleSetDirectories>;c:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;c:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <FileAlignment>4096</FileAlignment>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>..\@Bin\Debug\PublicClass.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <Optimize>true</Optimize>
+    <FileAlignment>4096</FileAlignment>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>..\@Bin\Release\PublicClass.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
@@ -148,6 +183,7 @@
       <Name>System.Drawing</Name>
       <HintPath>System.Drawing.dll</HintPath>
     </Reference>
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services">
@@ -173,8 +209,9 @@
     <Compile Include="Library\LogHelper.cs" />
     <Compile Include="Library\LogMsg.cs" />
     <Compile Include="Library\MemeroyHelper.cs" />
+    <Compile Include="Library\ReadDataFromXml.cs" />
     <Compile Include="Library\SecurityHelper.cs" />
-    <Compile Include="NumHelper.cs" />
+    <Compile Include="Library\NumHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -183,148 +220,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\CacheGeoCodeAddressCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\ClearDisCacheCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\ClearDisCacheCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\CreateMapImgFileCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\CreateMapImgFileCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetAlarmStateCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetAlarmStateCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetAlarmStatusCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetAlarmStatusCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetAllMapNamesCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetAllMapNamesCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetCityDistrictInfoCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetCityDistrictInfoCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetDataFromArrayCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetDataFromArrayCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetDisCacheCountCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetDisCacheCountCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetDistrictInfoByXYCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetDistrictInfoByXYCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetDistrictInfoCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetDistrictInfoCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetRegionNamesCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetRegionNamesCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetRoadNameCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetRoadNameCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetRoadNamesCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetRoadNamesCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetWeatherIdCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\GetWeatherIdCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\InitialStaticCacheCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\InitialStaticCacheCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\IsInRegionCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\IsInRegionCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\QueryAllLayerByAttrCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\QueryAllLayerByAttrCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\QueryAllLayerByLngLatAttrCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\QueryAllLayerByLngLatAttrCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\QueryAllLayerByPointCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\QueryAllLayerByPointCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\T_CacheInfoCompletedEventArgs.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\T_CacheInfoCompletedEventHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebGisService\WebgisService.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Check.cs">
+    <Compile Include="Library\Check.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CompressHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ExportToExcel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GisService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IniFile.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PrintOption.cs">
@@ -333,28 +232,18 @@
     <Compile Include="ProcessMemory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Record.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ReportExcel.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SecurityHelper.cs">
-      <SubType>Code</SubType>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SerializableHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="SoundPlay.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="StringHelper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ValueObject.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Variable.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -380,6 +269,19 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

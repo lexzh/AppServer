@@ -1,4 +1,4 @@
-namespace PublicClass
+namespace Library
 {
     using System;
     using System.Text;
@@ -65,18 +65,24 @@ namespace PublicClass
             return str.Substring(1);
         }
 
-        public static string GetStringFromBase16ASCII(string string_0)
+        public static string GetStringFromBase16(string str)
         {
-            int index = 0;
-            int num2 = 0;
-            byte[] bytes = new byte[string_0.Length / 2];
-            for (int i = 0; i < string_0.Length; i += 2)
+            string str2 = string.Empty;
+            for (int i = 0; i < str.Length; i += 2)
             {
-                num2 = Convert.ToInt32(string_0.Substring(i, 2), 0x10);
-                bytes[index] = (byte) num2;
-                index++;
+                str2 = str2 + Convert.ToString(Convert16To10(str.Substring(i, 2)));
             }
-            return Encoding.Default.GetString(bytes);
+            return str2;
+        }
+
+        public static string GetStringFromBase16ASCII(string str)
+        {
+            string str2 = string.Empty;
+            for (int i = 0; i < str.Length; i += 2)
+            {
+                str2 = str2 + Convert.ToChar(Convert16To10(str.Substring(i, 2)));
+            }
+            return str2;
         }
     }
 }

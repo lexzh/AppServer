@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace PublicClass
+namespace Library
 {
     public class Check
     {
@@ -378,6 +378,23 @@ namespace PublicClass
                     }
             }
             return flag;
+        }
+
+		 public static bool IsInRegion(string Lon, string Lat, string regionDot)
+        {
+            try
+            {
+                if (isRectangle(regionDot))
+                {
+                    string[] strArray = regionDot.Replace("*", @"\").Trim(new char[] { '\\' }).Split(new char[] { '\\' });
+                    return (((double.Parse(Lon) > double.Parse(strArray[0])) && (double.Parse(Lon) < double.Parse(strArray[4]))) && ((double.Parse(Lat) < double.Parse(strArray[5])) && (double.Parse(Lat) > double.Parse(strArray[1]))));
+                }
+                return (isRoundness(regionDot) && false);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public static bool isNumeric(string pStrNum, Check.NumType pType)

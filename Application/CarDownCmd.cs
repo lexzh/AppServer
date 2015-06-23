@@ -1,7 +1,6 @@
 namespace CarDownCmd
 {
     using GPSCarCommServerLib;
-    using Library;
     using System;
     using ParamLibrary.Application;
 
@@ -9,8 +8,8 @@ namespace CarDownCmd
     {
         private CarFunc carFunc;
         private Guid guid;
-        protected LogHelper log = new LogHelper();
-        protected LogMsg logMsg = new LogMsg();
+        //protected LogHelper log = new LogHelper();
+        //protected LogMsg logMsg = new LogMsg();
         private static int m_OrderId;
         private const int MAX_ORDERID = 0x10000;
 
@@ -60,9 +59,6 @@ namespace CarDownCmd
 
         public long icar_SendCmdXML(int nHigh, int nLow, string strCarId, string strCarType, int CmdCode, int CommFlg, string strXml)
         {
-            this.logMsg.FunctionName = "icar_SendCmdXML";
-            this.logMsg.Msg = strXml;
-            this.log.WriteLog(this.logMsg);
             return (long) this.carFunc.icar_SetCmdXML(this.CalOrderId(nHigh, nLow), strCarId, strCarType, CmdCode, strXml, CommFlg);
         }
 

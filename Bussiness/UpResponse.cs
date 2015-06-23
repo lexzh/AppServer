@@ -56,9 +56,9 @@ namespace Bussiness
             }
             catch (Exception exception)
             {
-                LogHelper helper = new LogHelper();
-                ErrorMsg msg = new ErrorMsg("CommandResponse", helper.GetCallFunction(), helper.GetExceptionMsg(exception));
-                helper.WriteError(msg);
+                //LogHelper helper = new LogHelper();
+                //ErrorMsg msg = new ErrorMsg("CommandResponse", helper.GetCallFunction(), helper.GetExceptionMsg(exception));
+                //helper.WriteError(msg);
             }
             return num;
         }

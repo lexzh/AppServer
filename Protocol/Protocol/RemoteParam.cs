@@ -1,8 +1,8 @@
 namespace Protocol
 {
-    using PublicClass;
     using System;
     using System.Collections.Generic;
+    using Library;
 
     public class RemoteParam
     {

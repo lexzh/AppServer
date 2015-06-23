@@ -16,14 +16,14 @@ namespace Library
             this.ErrorText = string.Empty;
         }
 
-        public ErrorMsg(string string_0, string string_1, string string_2)
+        public ErrorMsg(string clsName, string funName, string msg)
         {
             this.ClassName = string.Empty;
             this.FunctionName = string.Empty;
             this.ErrorText = string.Empty;
-            this.ClassName = string_0;
-            this.FunctionName = string_1;
-            this.ErrorText = string_2;
+            this.ClassName = clsName;
+            this.FunctionName = funName;
+            this.ErrorText = msg;
         }
 
         public string GetMsg()
@@ -34,7 +34,6 @@ namespace Library
             builder.Append(str + this.ClassName);
             builder.Append(str + this.FunctionName);
             builder.Append(str + this.ErrorText);
-            builder.Append(str + Environment.NewLine);
             return builder.ToString();
         }
     }

@@ -4,12 +4,12 @@ namespace Library
 
     public class DateHelper : Base
     {
-        public DateTime DateTimeFormat(string string_0)
+        public DateTime DateTimeFormat(string str)
         {
             DateTime time;
             try
             {
-                time = DateTime.ParseExact(string_0, "yyyyMMddHHmmss", null);
+                time = DateTime.ParseExact(str, "yyyyMMddHHmmss", null);
             }
             catch (Exception exception)
             {

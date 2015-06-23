@@ -18,15 +18,15 @@ namespace Library
             this.Code = string.Empty;
         }
 
-        public AlarmMsg(string string_0, string string_1, string string_2)
+        public AlarmMsg(string clsName, string funName, string msg)
         {
             this.ClassName = string.Empty;
             this.FunctionName = string.Empty;
             this.AlarmText = string.Empty;
             this.Code = string.Empty;
-            this.ClassName = string_0;
-            this.FunctionName = string_1;
-            this.AlarmText = string_2;
+            this.ClassName = clsName;
+            this.FunctionName = funName;
+            this.AlarmText = msg;
         }
 
         public string GetMsg()
@@ -37,7 +37,6 @@ namespace Library
             builder.Append(str + this.ClassName);
             builder.Append(str + this.FunctionName);
             builder.Append(str + this.AlarmText);
-            builder.Append(str + Environment.NewLine);
             return builder.ToString();
         }
     }

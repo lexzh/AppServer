@@ -1,8 +1,8 @@
 namespace Protocol
 {
-    using PublicClass;
     using System;
     using System.Data;
+    using Library;
 
     public class DB44DataParse : Parse
     {

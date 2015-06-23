@@ -1,7 +1,7 @@
 namespace Bussiness
 {
-    using PublicClass;
     using System;
+    using Library;
 
     public class CustomMessage : AttachParser
     {

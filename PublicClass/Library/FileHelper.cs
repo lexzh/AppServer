@@ -9,20 +9,41 @@ namespace Library
     using System.Runtime.CompilerServices;
     using System.Text;
     using System.Threading;
+    using System.Xml;
 
     public class FileHelper : Base
     {
-        private static int _Day;
-        private static ArrayList _list;
-        private static int fielNum;
-        protected static string FilePath;
+        private static int _Day = DateTime.Today.Day;
+        private static ArrayList _list = new ArrayList(200);
+        private static bool bWrite = false;
+        private static int fielNum = 0;
+        protected static string FilePath = ReadParamFromXml("logPath");
         private const int fileSiza = 0x493e0;
-        private static DataSet m_ParamData;
-        private const string prxFilename = "-sLog.txt";
+        private static DataSet m_ParamData = LoadParamData();
+        private const string prxFilename = "-timerLog.txt";
 
         static FileHelper()
         {
-            old_acctor_mc();
+            try
+            {
+                if (string.IsNullOrEmpty(FilePath))
+                {
+                    FilePath = @"c:\LogPic";
+                }
+                if (!Directory.Exists(FilePath))
+                {
+                    Directory.CreateDirectory(FilePath);
+                }
+            }
+            catch
+            {
+                FilePath = @"c:\LogPic";
+                if (!Directory.Exists(FilePath))
+                {
+                    Directory.CreateDirectory(FilePath);
+                }
+            }
+            new Thread(new ThreadStart(FileHelper.StartWrite)) { Priority = ThreadPriority.AboveNormal }.Start();
         }
 
         private static string GetAssemblyPath()
@@ -50,27 +71,27 @@ namespace Library
                 InitFileName();
             }
             FileInfo info = new FileInfo(FileName);
-            if (!info.Exists || (info.Length < 0x493e0L))
+            if (info.Exists && (info.Length >= 0x493e0L))
             {
-                goto Label_0105;
+                int num = 0;
+                while (true)
+                {
+                    FileName = FilePath + @"\" + DateTime.Today.ToString("yyyyMMdd") + "-" + num.ToString() + "-timerLog.txt";
+                    info = new FileInfo(FileName);
+                    if (!info.Exists || (info.Exists && (info.Length < 0x493e0L)))
+                    {
+                        fielNum = num;
+                        break;
+                    }
+                    num++;
+                }
             }
-            int num = 0;
-        Label_008F:;
-            FileName = FilePath + @"\" + DateTime.Today.ToString("yyyy-MM-dd") + "-" + num.ToString() + "-sLog.txt";
-            info = new FileInfo(FileName);
-            if (info.Exists && (!info.Exists || (info.Length >= 0x493e0L)))
-            {
-                num++;
-                goto Label_008F;
-            }
-            fielNum = num;
-        Label_0105:
             return FileName;
         }
 
         private static void InitFileName()
         {
-            FileName = FilePath + @"\" + DateTime.Today.ToString("yyyy-MM-dd") + "-" + fielNum.ToString() + "-sLog.txt";
+            FileName = FilePath + @"\" + DateTime.Today.ToString("yyyyMMdd") + "-" + fielNum.ToString() + "-timerLog.txt";
         }
 
         private static DataSet LoadParamData()
@@ -80,28 +101,6 @@ namespace Library
             return set;
         }
 
-        private static void old_acctor_mc()
-        {
-            m_ParamData = LoadParamData();
-            _Day = DateTime.Today.Day;
-            _list = new ArrayList(200);
-            FilePath = ReadParamFromXml("logPath");
-            fielNum = 0;
-            if (string.IsNullOrEmpty(FilePath))
-            {
-                FilePath = @"d:\GpsAppServerLog";
-            }
-            if (!Directory.Exists(FilePath))
-            {
-                Directory.CreateDirectory(FilePath);
-            }
-            Thread thread = new Thread(new ThreadStart(FileHelper.StartWrite)) {
-                IsBackground = true
-            };
-            thread.Priority = ThreadPriority.AboveNormal;
-            thread.Start();
-        }
-
         public static DataSet ReadDataXml(string string_0)
         {
             DataSet set = new DataSet();
@@ -109,7 +108,7 @@ namespace Library
             return set;
         }
 
-        public static string ReadParamFromXml(string string_0)
+        public static string ReadParamFromXml(string pName)
         {
             string str = string.Empty;
             try
@@ -118,11 +117,13 @@ namespace Library
                 {
                     m_ParamData = LoadParamData();
                 }
-                str = Convert.ToString(m_ParamData.Tables[0].Rows[0][string_0]);
+                str = Convert.ToString(m_ParamData.Tables[0].Rows[0][pName]);
             }
             catch (Exception exception)
             {
-                throw new Exception("读取配置参数错误，错误信息为：" + exception.Message);
+                LogHelper helper = new LogHelper();
+                ErrorMsg pErrorMsg = new ErrorMsg("filehelper", "方法ReadParamFromXml", "读取配置参数错误" + exception.Message);
+                helper.WriteError(pErrorMsg);
             }
             return str;
         }
@@ -132,13 +133,13 @@ namespace Library
             return this.ReadText(FilePath + FileName);
         }
 
-        public string ReadText(string string_0)
+        public string ReadText(string pFileName)
         {
             StreamReader reader = null;
             StringBuilder builder = new StringBuilder();
             try
             {
-                reader = new StreamReader(string_0, true);
+                reader = new StreamReader(pFileName, true);
                 while (reader.Peek() >= 0)
                 {
                     builder.Append(reader.ReadLine());
@@ -155,29 +156,52 @@ namespace Library
             return builder.ToString();
         }
 
-        public string ReadWebConfigFile(string string_0)
+        public string ReadWebConfigFile(string pName)
         {
-            string str = ConfigurationSettings.AppSettings[string_0];
-            return base.ConvertNullToEmpty(str);
+            string pStr = ConfigurationSettings.AppSettings[pName];
+            return base.ConvertNullToEmpty(pStr);
         }
 
-        public static string ReadXmlEveryOne(string string_0)
+        public static string ReadXmlEveryOne(string pName)
         {
             string str = string.Empty;
             try
             {
-                str = Convert.ToString(LoadParamData().Tables[0].Rows[0][string_0]);
+                str = Convert.ToString(LoadParamData().Tables[0].Rows[0][pName]);
             }
             catch (Exception exception)
             {
-                throw new Exception("读取配置参数错误，错误信息为：" + exception.Message);
+                LogHelper helper = new LogHelper();
+                ErrorMsg pErrorMsg = new ErrorMsg("filehelper", "方法ReadXmlEveryOne", "读取配置参数错误" + exception.Message);
+                helper.WriteError(pErrorMsg);
             }
             return str;
         }
 
+        public static void setConfig(string appKey, string AppValue)
+        {
+            string filename = GetAssemblyPath() + @"\param.xml";
+            XmlDocument document = new XmlDocument();
+            document.Load(filename);
+            XmlNode node = document.SelectSingleNode("//param");
+            XmlElement element = (XmlElement) node.SelectSingleNode("//" + appKey);
+            if (element != null)
+            {
+                element.InnerText = AppValue;
+            }
+            else
+            {
+                XmlElement newChild = document.CreateElement(appKey);
+                newChild.InnerText = AppValue;
+                node.AppendChild(newChild);
+            }
+            document.Save(filename);
+        }
+
         public static void StartWrite()
         {
-            while (true)
+            bWrite = true;
+            while (bWrite)
             {
                 try
                 {
@@ -195,26 +219,32 @@ namespace Library
                 catch
                 {
                 }
-                Thread.Sleep(0x2710);
+                Thread.Sleep(500);
             }
         }
 
-        private static void write(string string_0)
+        public static void StopWrite()
+        {
+            Thread.Sleep(0x7d0);
+            bWrite = false;
+        }
+
+        private static void write(string pMsg)
         {
             StreamWriter writer = null;
             try
             {
                 writer = new StreamWriter(GetFileName(), true);
-                writer.WriteLine(string_0);
+                writer.WriteLine(pMsg);
             }
             catch (Exception exception)
             {
                 StreamWriter writer2 = null;
                 try
                 {
-                    writer2 = new StreamWriter(FilePath + @"\" + DateTime.Today.ToShortDateString() + "-Temp.txt", true);
+                    writer2 = new StreamWriter(FilePath + @"\" + DateTime.Today.ToString("yyyyMMdd") + "-Temp.txt", true);
                     writer2.WriteLine("Error： 写日志发生错误：" + exception.Message);
-                    writer2.WriteLine(string_0);
+                    writer2.WriteLine(pMsg);
                 }
                 catch
                 {
@@ -236,25 +266,15 @@ namespace Library
             }
         }
 
-        public void WriteText(string string_0)
+        public void WriteText(string pMsg)
         {
-            _list.Add(string_0);
+            _list.Add(pMsg);
         }
 
         protected static string FileName
         {
             get;
             set;
-            //[CompilerGenerated]
-            //get
-            //{
-            //    return <FileName>k__BackingField;
-            //}
-            //[CompilerGenerated]
-            //set
-            //{
-            //    <FileName>k__BackingField = value;
-            //}
         }
     }
 }
